@@ -1,10 +1,6 @@
 # This is a Shiny web application. 
 ##building upon:    http://shiny.rstudio.com/
-#
-
-#yea successfully launch survey on R Shiny app and connect with google drive! 01042022
-#to do -- add drawing function potentially to the survey to enable drawing their emotions https://stackoverflow.com/questions/41701807/way-to-free-hand-draw-shapes-in-shiny
-#to do -- set up daily /regular email notifications for users to fill out the esm survey
+#author:xiao ge; date:03242022
 
 library(shiny)
 library(shinysurveys)
@@ -16,26 +12,19 @@ library(googledrive)
 library(googlesheets4)
 library("DT")
 
-# rsconnect::deployApp('/Users/xiao/Documents/R_Shiny/ESM_Dec292021', appFiles = c("app.R", ".secrets"))
-
-# #run this once to create the file
-# googlesheets4::gs4_create(name = "esm_try", 
-#                           # Create a sheet called main for all data to 
-#                           # go to the same place
-#                           sheets = "esm_01042022")
 
 
 # designate project-specific cache
 options(gargle_oath_cache = ".secrets",
-        gargle_oauth_email = "liz.gexiao@gmail.com",
+        gargle_oauth_email = "your_gmail@gmail.com",
         gargle_oob_default = TRUE)
 # Authorize googledrive
-googledrive::drive_auth(email = "liz.gexiao@gmail.com", # Replace with your email!
+googledrive::drive_auth(email = "your_gmail@gmail.com", # Replace with your email!
                         cache = ".secrets",
                         use_oob = TRUE)
 
 # Authorize googlesheets4
-googlesheets4::gs4_auth(email = "liz.gexiao@gmail.com", # Replace with your email!
+googlesheets4::gs4_auth(email = "your_gmail@gmail.com", # Replace with your email!
                         cache = ".secrets",
                         use_oob = TRUE)
 
@@ -50,22 +39,17 @@ googlesheets4::gs4_auth(email = "liz.gexiao@gmail.com", # Replace with your emai
 #   gargle_oauth_cache = ".secrets"
 # )
 
-
-
 # Get the ID of the sheet for writing programmatically
-# This should be placed at the top of your shiny app
-sheet_id <- googledrive::drive_get("creative_experience_try")$id
+sheet_id <- googledrive::drive_get("your_google_sheet")$id
 
 # 
-# #store the results
+# #store the results in the following format in your "your_google_sheet"
 # Results <- reactive(c(
 #   input$subject_id, input$question_id, input$question_type, input$response, Sys.time()
 # ))
 
 
-# Set working directory
-#https://github.com/feelinsly/online_files/blob/main/esm_xg_01042022.csv
-
+#put your survey question design online somewhere, for me, I put it in my website.
 survey_questions <- read_csv("http://web.stanford.edu/~xiaog/online_files/shareyourcreative_experience_xg_03242022.csv", 
                              col_types = cols(question = col_character(),
                                               option = col_character(),
@@ -132,15 +116,7 @@ server <- function(input, output, session) {
   
 }    
 
-#     
-#     
-#     
-#        print(getSurveyData())
-#     Data  <- Data %>% as.list() %>% data.frame()
-#       sheet_append(Data, response_data)  
-#     #This will add the new row at the bottom of the dataset in Google Sheets.
-#   })
-# }
+
 
 #run shiny application
 shinyApp(ui, server)
