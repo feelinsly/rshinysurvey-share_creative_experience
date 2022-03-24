@@ -1,5 +1,7 @@
 # This is a Shiny web application. 
-##building upon:    http://shiny.rstudio.com/
+##building upon:   
+# http://shiny.rstudio.com/
+# https://cran.r-project.org/web/packages/shinysurveys/readme/README.html
 #author:xiao ge; date:03242022
 
 library(shiny)
